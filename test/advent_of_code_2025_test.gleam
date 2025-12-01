@@ -1,5 +1,8 @@
 import day1
+import gleam/list
+import gleam/string
 import gleeunit
+import simplifile
 
 pub fn main() -> Nil {
   gleeunit.main()
@@ -35,4 +38,10 @@ pub fn turn_test() {
   assert day1.turn(99, "L99") == Ok(0)
   assert day1.turn(0, "R14") == Ok(14)
   assert day1.turn(14, "L82") == Ok(32)
+}
+
+pub fn day1_test() {
+  let assert Ok(input) = simplifile.read(from: "input/1.txt")
+  let lines = string.split(input, "\n") |> list.filter(fn(item) { item != "" })
+  assert day1.compute(lines) == 1078
 }
