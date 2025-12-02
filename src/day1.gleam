@@ -1,7 +1,8 @@
 import gleam/int
 import gleam/list
+import gleam/result
 
-pub fn compute(input) -> Int {
+pub fn compute(input: List(Turn)) -> Int {
   let #(_, positions) =
     list.map_fold(from: 50, over: input, with: fn(position, rotation) {
       let assert Ok(newpos) = turn(position, rotation)
@@ -10,17 +11,14 @@ pub fn compute(input) -> Int {
   list.count(positions, fn(i) { i == 0 })
 }
 
-pub fn turn(start: Int, rotation: String) -> Result(Int, String) {
+pub fn turn(start: Int, rotation: Turn) -> Result(Int, String) {
   case rotation {
-    "L" <> s -> {
-      let assert Ok(i) = int.parse(s)
+    Left(i) -> {
       Ok(spin(start - i))
     }
-    "R" <> s -> {
-      let assert Ok(i) = int.parse(s)
+    Right(i) -> {
       Ok(spin(start + i))
     }
-    _ -> Error("Invalid rotation")
   }
 }
 
@@ -34,4 +32,24 @@ fn spin(i: Int) -> Int {
     j if j == i -> i
     j -> spin(j)
   }
+}
+
+pub type Turn {
+  Left(Int)
+  Right(Int)
+}
+
+pub fn parse(rotation: String) -> List(Turn) {
+  let turn = case rotation {
+    "L" <> s -> {
+      let assert Ok(i) = int.parse(s)
+      Ok(Left(i))
+    }
+    "R" <> s -> {
+      let assert Ok(i) = int.parse(s)
+      Ok(Right(i))
+    }
+    _ -> Error("Invalid turn pattern")
+  }
+  result.values([turn])
 }
