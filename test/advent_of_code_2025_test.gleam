@@ -52,5 +52,11 @@ pub fn day1b_test() {
   let assert Ok(input) = simplifile.read(from: "input/1.txt")
   let lines = string.split(input, "\n") |> list.filter(fn(item) { item != "" })
   let turns = list.flat_map(lines, day1.parse)
-  assert day1.compute(turns) == 1078
+  let split_turns = day1.split_turns(turns)
+  assert day1.compute(split_turns) == 6412
+}
+
+pub fn split_turns_test() {
+  assert day1.split_turns([day1.Left(1)]) == [day1.Left(1)]
+  assert day1.split_turns([day1.Left(2)]) == [day1.Left(1), day1.Left(1)]
 }

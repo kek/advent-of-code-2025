@@ -53,3 +53,13 @@ pub fn parse(rotation: String) -> List(Turn) {
   }
   result.values([turn])
 }
+
+pub fn split_turns(turns: List(Turn)) -> List(Turn) {
+  turns
+  |> list.flat_map(fn(turn) {
+    case turn {
+      Left(i) -> list.repeat(Left(1), i)
+      Right(i) -> list.repeat(Right(1), i)
+    }
+  })
+}
