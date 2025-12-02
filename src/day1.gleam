@@ -13,12 +13,8 @@ pub fn compute(input: List(Turn)) -> Int {
 
 pub fn turn(start: Int, rotation: Turn) -> Result(Int, String) {
   case rotation {
-    Left(i) -> {
-      Ok(spin(start - i))
-    }
-    Right(i) -> {
-      Ok(spin(start + i))
-    }
+    Left(i) -> Ok(spin(start - i))
+    Right(i) -> Ok(spin(start + i))
   }
 }
 
@@ -49,7 +45,7 @@ pub fn parse(rotation: String) -> List(Turn) {
       let assert Ok(i) = int.parse(s)
       Ok(Right(i))
     }
-    _ -> Error("Invalid turn pattern")
+    _ -> panic as "Invalid turn pattern"
   }
   result.values([turn])
 }
