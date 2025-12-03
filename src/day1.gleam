@@ -5,16 +5,16 @@ import gleam/result
 pub fn compute(input: List(Turn)) -> Int {
   let #(_, positions) =
     list.map_fold(from: 50, over: input, with: fn(position, rotation) {
-      let assert Ok(newpos) = turn(position, rotation)
+      let newpos = turn(position, rotation)
       #(newpos, newpos)
     })
   list.count(positions, fn(i) { i == 0 })
 }
 
-pub fn turn(start: Int, rotation: Turn) -> Result(Int, String) {
+pub fn turn(start: Int, rotation: Turn) -> Int {
   case rotation {
-    Left(i) -> Ok(spin(start - i))
-    Right(i) -> Ok(spin(start + i))
+    Left(i) -> spin(start - i)
+    Right(i) -> spin(start + i)
   }
 }
 
