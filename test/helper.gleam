@@ -10,5 +10,6 @@ pub fn read_input(
   let assert Ok(input) = simplifile.read(from: file)
   string.split(input, separator)
   |> list.filter(fn(item) { item != "" })
+  |> list.map(string.trim)
   |> list.flat_map(parse)
 }
