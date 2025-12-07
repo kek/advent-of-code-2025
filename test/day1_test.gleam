@@ -1,8 +1,7 @@
 import day1
 import gleam/list
-import gleam/string
 import gleeunit
-import simplifile
+import helper
 
 pub fn main() -> Nil {
   gleeunit.main()
@@ -47,16 +46,12 @@ pub fn day1_example_test() {
 }
 
 pub fn day1_test() {
-  let assert Ok(input) = simplifile.read(from: "input/1.txt")
-  let lines = string.split(input, "\n") |> list.filter(fn(item) { item != "" })
-  let turns = list.flat_map(lines, day1.parse)
+  let turns = helper.read_input("input/1.txt", "\n", day1.parse)
   assert day1.compute(turns) == 1078
 }
 
 pub fn day1b_test() {
-  let assert Ok(input) = simplifile.read(from: "input/1.txt")
-  let lines = string.split(input, "\n") |> list.filter(fn(item) { item != "" })
-  let turns = list.flat_map(lines, day1.parse)
+  let turns = helper.read_input("input/1.txt", "\n", day1.parse)
   let split_turns = day1.split_turns(turns)
   assert day1.compute(split_turns) == 6412
 }
